@@ -37,22 +37,34 @@ for tweet in tweepy.Cursor(api.search, q='@mishraddev').items():
 print ('\nFollowers in Twitter\n')
 for user in tweepy.Cursor(api.followers, screen_name="@mishraddev").items(10):
     print (user.screen_name)
-
-## To print names of people whom I am following
-print ('\nFollowing in Twitter\n')
+    print ('\nFollowing in Twitter\n')
 for friend in tweepy.Cursor(api.friends).items(10):
     print (friend.screen_name) 
 print("Like	any	tweet	that	has	the	hashtag	‘#IOT’")
-	#for favorite in tweepy.Cursor(api.favorite,q='#IOT').items(10):
-	#    print(favorite.screen_name)
 tweet=api.user_timeline(screen_name="@GregoriaTravels",count=1)
-#for t in tweet:
-  #  try:
-      #  if t.favorited==False:
-       #     t.favorite()
-        #if t.favorited==True:
-         #   break
+for t in tweet:
+    try:
+        if t.favorited==False:
+            t.favorite()
+        if t.favorited==True:
+            break
+    except tweepy.TweepError as e:
+            print(e.reason)
+            sleep(10)
+            continue
+    except StopIteration:
+            break
+print("Like a tweet once it  is tweeted  by @boltiot")
 for tw in tweepy.Cursor(api.search,q='#IoT').items(10): 
-    if tw.favorited==False:
-        tw.favorite()
-        
+    try:
+        if tw.favorited==False:
+           tw.favorite()
+        if tw.favorited==True:
+           break
+    except tweepy.TweepError as e:
+               print(e.reason)
+               sleep(10)
+               continue
+    except StopIteration:
+               break
+
